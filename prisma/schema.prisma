@@ -1,0 +1,19 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL") // uses connection pooling
+}
+
+model User {
+  id            String       @default(cuid()) @id
+  name          String?
+  checkIn       DateTime
+  checkOut      DateTime
+  email         String?   @unique
+  @@map(name: "users")
+}
