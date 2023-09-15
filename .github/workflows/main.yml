@@ -26,6 +26,7 @@ jobs:
       -
         name: Build and push
         uses: docker/build-push-action@v5
+        working-directory: ./nextjs
         with:
           context: nextjs
           file: nextjs/Dockerfile
