@@ -1,8 +1,8 @@
 FROM node:18-alpine AS dependencies
 
 WORKDIR /app
-COPY package.json package-lock.lock ./
-RUN yarn
+COPY package.json package-lock.json ./
+RUN npm ci
 
 FROM node:18-alpine AS build
 
