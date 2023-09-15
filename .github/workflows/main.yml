@@ -31,4 +31,4 @@ jobs:
           file: nextjs/Dockerfile
           platforms: linux/amd64
           push: true
-          tag: latest
+          tags: bacuaban77/app:latest
