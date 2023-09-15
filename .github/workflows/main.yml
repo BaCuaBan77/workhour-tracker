@@ -27,7 +27,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          file: api/dockerfiles/api/Dockerfile
           context: nextjs
           file: nextjs/Dockerfile
           platforms: linux/amd64
