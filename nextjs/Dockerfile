@@ -1,30 +1,26 @@
-FROM node:lts-buster-slim AS base
-RUN apt-get update && apt-get install libssl-dev ca-certificates -y
-WORKDIR /app
+# base image
+FROM node:lts
 
-COPY package.json yarn.lock ./
+# create & set working directory
+RUN mkdir -p /usr/src
+WORKDIR /usr/src
 
-FROM base as build
-RUN export NODE_ENV=production
-RUN yarn
+# copy source files
+COPY . /usr/src
+
+COPY package*.json ./
+COPY prisma ./prisma/
+
+RUN apt-get -qy update && apt-get -qy install openssl
+
+# install dependencies
+RUN npm install
+
+RUN npm install @prisma/client
 
 COPY . .
-RUN yarn run prisma:generate
-RUN yarn build
-
-FROM base as prod-build
-
-RUN yarn install --production
-COPY prisma prisma
-RUN yarn run prisma:generate
-RUN cp -R node_modules prod_node_modules
-
-FROM base as prod
-
-COPY --from=prod-build /app/prod_node_modules /app/node_modules
-COPY --from=build  /app/.next /app/.next
-COPY --from=build  /app/public /app/public
-COPY --from=build  /app/prisma /app/prisma
-
-EXPOSE 80
-CMD ["yarn", "start"]
+RUN npx prisma generate --schema ./prisma/schema.prisma
+# start app
+RUN npm run build
+EXPOSE 3000
+CMD npm run start
