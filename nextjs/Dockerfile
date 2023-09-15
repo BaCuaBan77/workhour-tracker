@@ -5,6 +5,7 @@ FROM node:16-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
+COPY --chown=nextjs:nodejs prisma ./prisma
 RUN npm ci
 
 # Rebuild the source code only when needed
@@ -31,7 +32,6 @@ COPY --from=builder /app/package.json ./package.json
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --chown=nextjs:nodejs prisma/ ./prisma/                # <---important to support Prisma DB migrations in docker-bootstrap-app.sh
 COPY --chown=nextjs:nodejs docker-bootstrap-app.sh ./
 USER nextjs
 EXPOSE 3000
