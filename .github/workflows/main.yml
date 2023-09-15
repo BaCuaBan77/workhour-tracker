@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'main'
-
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -29,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v5
         working-directory: ./nextjs
         with:
-          context: .
-          file: ./Dockerfile
+          context: nextjs
+          file: nextjs/Dockerfile
           platforms: linux/amd64
           push: true
