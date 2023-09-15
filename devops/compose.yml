@@ -10,6 +10,32 @@ services:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    container_name: duckdns
+    environment:
+      - SUBDOMAINS=workload
+      - TOKEN=$DUCKDNS_TOKEN
+  nginx:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+  nexus:
+    container_name: nexus
+    image: sonatype/nexus
+    restart: unless-stopped
+    volumes:
+      - "nexus-data:/sonatype-work"
+    ports:
+      - "8081:8081"
 volumes:
+  nexus-data: {}
   db:
     driver: local

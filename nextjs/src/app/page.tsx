@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import styles from './page.module.css'
-import prisma from '../../../prisma/prisma';
+import prisma from '../../prisma/prisma';
 
 export default async function Home() {
   const feed = await prisma.user.findFirst({

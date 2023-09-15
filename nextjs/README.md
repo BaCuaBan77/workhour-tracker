@@ -5,7 +5,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
-npm run dev
+yarn
+yarn dev
 ```
 
 The project will be run on [http://localhost:3000](http://localhost:3000)
