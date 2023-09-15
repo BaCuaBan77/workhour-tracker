@@ -32,3 +32,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: bacuaban77/app:latest
+
