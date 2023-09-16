@@ -1,10 +1,53 @@
-import React from 'react';
-import styles from '../../styles/login.module.css';
+'use client'
+
+import React, { ChangeEvent, useState } from 'react';
+import styles from '@/styles/login.module.css';
 import Image from 'next/image'; 
+import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const Login = () => {
+  const router = useRouter();
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      setFormValues({ email: "", password: "" });
+
+      const res = await signIn("github");
+
+      setLoading(false);
+
+      console.log(res);
+      if (!res?.error) {
+        router.push(callbackUrl);
+      } else {
+        setError("invalid email or password");
+      }
+    } catch (error: any) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
   return (
     <div className={styles.body}>
+      {error && (
+        <p>{error}</p>
+      )}
       <Image
         src="/snowflake.jpg" // Replace with the actual path to your image
         alt="Login Image"
@@ -27,9 +70,10 @@ const Login = () => {
             </label>
             <input
               className={styles.input}
+              onChange={handleChange}
               type='text'
-              id='username'
-              name='username'
+              id='email'
+              name='usemailername'
             />
           </div>
           <div className={styles.formGroup}>
@@ -38,13 +82,14 @@ const Login = () => {
             </label>
             <input
               className={styles.input}
+              onChange={handleChange}
               type='password'
               id='password'
               name='password'
             />
           </div>
-          <button className={styles.button} type='submit'>
-            Login
+          <button className={styles.button} type='submit' onClick={onSubmit}>
+            {loading ? "loading..." : "Sign In"}
           </button>
         </form>
       </div>

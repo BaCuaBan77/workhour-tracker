@@ -28,25 +28,16 @@ services:
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
-  nexus:
-    container_name: nexus
-    image: sonatype/nexus
-    restart: unless-stopped
-    volumes:
-      - "nexus-data:/sonatype-work"
-    ports:
-      - "8081:8081"
   app:
     image: bacuaban77/app:latest
-    name: app
+    container_name: app
     environment:
       - DATABASE_URL="postgresql://postgres:postgres@localhost:5432/fullstack?sslmode=disable"
     depends_on:
       - db
     restart: unless-stopped
     ports:
-      - '3000:3000'
+      - '9990:3000'
 volumes:
-  nexus-data: {}
   db:
     driver: local
