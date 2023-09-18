@@ -1,10 +1,8 @@
+'use client'
+
+import { SessionProvider } from "next-auth/react"
 import React from "react"
 
-export const metadata = {
-  title: 'FrostBite',
-  description: 'Simple Work-tracking system',
-}
-    
 export default function RootLayout({
   children,
 }: {
@@ -13,9 +11,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      
+      <SessionProvider>
         {children}
-
+      </SessionProvider>
         </body>
     </html>
   )
