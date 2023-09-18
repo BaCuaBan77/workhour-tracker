@@ -7,7 +7,7 @@ declare module 'next-auth' {
    */
   interface Session {
     user: User;
-    error: string;
+    roles: string[];
   }
   /**
    * The shape of the user object returned in the OAuth providers' `profile` callback,

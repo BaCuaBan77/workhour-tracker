@@ -13,7 +13,7 @@ export interface KeycloakToken {
     roles: string[];
   };
   resource_access: {
-    account: {
+    workhour: {
       roles: string[];
     };
   };
@@ -36,7 +36,7 @@ export interface Roles {
   roles: string[];
 }
 
-export declare enum SystemUserPrivilege {
+export enum SystemUserPrivilege {
   EMPLOYER = 'employer',
   EMPLOYEE = 'employee',
 }

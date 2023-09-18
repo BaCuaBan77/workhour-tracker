@@ -1,10 +1,16 @@
-'use client';
+'use client'
+
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { getSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import {  useSession } from 'next-auth/react';
 
-const Home= () => {
 
+const Home=  () => {
+  const session = useSession();
+
+  if (!session) {
+    redirect("/login")
+  }
   return <></>;
 };
 
