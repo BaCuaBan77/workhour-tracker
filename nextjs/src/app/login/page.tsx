@@ -4,32 +4,32 @@ import React, { ChangeEvent, useState } from 'react';
 import styles from '@/styles/login.module.css';
 import Image from 'next/image'; 
 import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
-  const router = useRouter();
+  const {push} = useRouter();
   const [formValues, setFormValues] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
-      setFormValues({ email: "", password: "" });
+      setFormValues({ username: "", password: "" });
 
-      const res = await signIn("github");
+      const res = await signIn('credentials', {
+        username: formValues.username,
+        password: formValues.password
+      });
 
       setLoading(false);
 
-      console.log(res);
       if (!res?.error) {
-        router.push(callbackUrl);
+        push('/dashboard');
       } else {
         setError("invalid email or password");
       }
@@ -72,8 +72,8 @@ const Login = () => {
               className={styles.input}
               onChange={handleChange}
               type='text'
-              id='email'
-              name='usemailername'
+              id='username'
+              name='username'
             />
           </div>
           <div className={styles.formGroup}>

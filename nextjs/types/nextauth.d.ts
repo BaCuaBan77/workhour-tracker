@@ -1,11 +1,12 @@
 import { User } from "next-auth"
 import { JWT } from "next-auth/jwt"
+import { KeycloakToken } from "."
 
 type UserId = string
 
 declare module "next-auth/jwt" {
-  interface JWT {
-    id: UserId
+  interface JWT extends KeycloakToken {
+    
   }
 }
 

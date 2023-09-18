@@ -37,7 +37,23 @@ services:
       - db
     restart: unless-stopped
     ports:
-      - '9990:3000'
+      - '3000:3000'
+  keycloak:
+      image: bitnami/keycloak:latest
+      container_name: keycloak
+      environment:
+        - KEYCLOAK_DATABASE_HOST=db
+        - KEYCLOAK_DATABASE_NAME=keycloak
+        - KEYCLOAK_DATABASE_USER=postgres
+        - KEYCLOAK_DATABASE_PASSWORD=postgres
+      ports:
+        - "8443:8443"
+        - "8080:8080"
+        - "9990:9990"
+      volumes:
+        - /path/to/init-scripts:/docker-entrypoint-initdb.d
+
+
 volumes:
   db:
     driver: local
