@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^5.2.0",
+    "@types/react": "18.2.21",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3"
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}
