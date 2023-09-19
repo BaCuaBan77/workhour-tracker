@@ -28,17 +28,9 @@ services:
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
-  nexus:
-    container_name: nexus
-    image: sonatype/nexus
-    restart: unless-stopped
-    volumes:
-      - "nexus-data:/sonatype-work"
-    ports:
-      - "8081:8081"
   app:
     image: bacuaban77/app:latest
-    name: app
+    container_name: app
     environment:
       - DATABASE_URL="postgresql://postgres:postgres@localhost:5432/fullstack?sslmode=disable"
     depends_on:
@@ -46,7 +38,22 @@ services:
     restart: unless-stopped
     ports:
       - '3000:3000'
+  keycloak:
+      image: bitnami/keycloak:latest
+      container_name: keycloak
+      environment:
+        - KEYCLOAK_DATABASE_HOST=db
+        - KEYCLOAK_DATABASE_NAME=keycloak
+        - KEYCLOAK_DATABASE_USER=postgres
+        - KEYCLOAK_DATABASE_PASSWORD=postgres
+      ports:
+        - "8443:8443"
+        - "8080:8080"
+        - "9990:9990"
+      volumes:
+        - /path/to/init-scripts:/docker-entrypoint-initdb.d
+
+
 volumes:
-  nexus-data: {}
   db:
     driver: local
