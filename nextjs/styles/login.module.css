@@ -30,12 +30,17 @@
   font-weight: bold;
   margin-top: -10px;
   text-transform: uppercase;
-  background: linear-gradient(45deg, #007bff, #003aff, #007bff); /* Higher-contrast blueish gradient background */
+  background: linear-gradient(
+    45deg,
+    #007bff,
+    #003aff,
+    #007bff
+  ); /* Higher-contrast blueish gradient background */
   background-size: 200% 100%;
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
-  animation: blueFlame 2s linear infinite alternate-reverse; 
+  animation: blueFlame 2s linear infinite alternate-reverse;
 }
 
 .slogan {

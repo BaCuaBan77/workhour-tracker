@@ -1,45 +1,38 @@
-'use client';
+"use client";
 
-import React, { ChangeEvent, useState } from 'react';
-import styles from '@/styles/login.module.css';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { createRequestOptions, parseJwt } from '@/src/util/utils';
+import React, { ChangeEvent, useEffect, useState } from "react";
+import styles from "@/styles/login.module.css";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const Login = () => {
   const { push } = useRouter();
   const [formValues, setFormValues] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { user, login, logout } = useAuth();
+
+  React.useEffect(() => {
+    if (user) {
+      push("/dashboard");
+    }
+  }, [user, push]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
-      setFormValues({ username: '', password: '' });
+      const user = await login(formValues.username, formValues.password);
 
-      const res = await fetch(
-        'http://192.168.0.177:8080/realms/master/protocol/openid-connect/token',
-        createRequestOptions(
-          'password',
-          formValues.username,
-          formValues.password,
-          null
-        )
-      );
-      const data = await res.json();
-      // If no error and we have user data, return it
-      if (res.status === 200 && data) {
-        const token = data.access_token;
-        const user = await parseJwt(token); // Implement this function
-
+      if (user) {
         setLoading(false);
-        push('/dashboard');
+        setFormValues({ username: "", password: "" });
       } else {
-        setError('invalid email or password');
+        setError("invalid email or password");
       }
     } catch (error: any) {
       setLoading(false);
@@ -55,8 +48,8 @@ const Login = () => {
     <div className={styles.body}>
       {error && <p>{error}</p>}
       <Image
-        src='/snowflake.jpg' // Replace with the actual path to your image
-        alt='Login Image'
+        src="/snowflake.jpg" // Replace with the actual path to your image
+        alt="Login Image"
         className={styles.image}
         width={1000} // Adjust the width as needed
         height={800} // Adjust the height as needed
@@ -73,31 +66,31 @@ const Login = () => {
           <h1 className={styles.title}>Login</h1>
           <form className={styles.form}>
             <div className={styles.formGroup}>
-              <label className={styles.label} htmlFor='username'>
+              <label className={styles.label} htmlFor="username">
                 Username
               </label>
               <input
                 className={styles.input}
                 onChange={handleChange}
-                type='text'
-                id='username'
-                name='username'
+                type="text"
+                id="username"
+                name="username"
               />
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label} htmlFor='password'>
+              <label className={styles.label} htmlFor="password">
                 Password
               </label>
               <input
                 className={styles.input}
                 onChange={handleChange}
-                type='password'
-                id='password'
-                name='password'
+                type="password"
+                id="password"
+                name="password"
               />
             </div>
-            <button className={styles.button} type='submit' onClick={onSubmit}>
-              {loading ? 'loading...' : 'Sign In'}
+            <button className={styles.button} type="submit" onClick={onSubmit}>
+              {loading ? "loading..." : "Sign In"}
             </button>
           </form>
         </div>

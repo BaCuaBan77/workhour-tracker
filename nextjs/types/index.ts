@@ -37,6 +37,6 @@ export interface Roles {
 }
 
 export enum SystemUserPrivilege {
-  EMPLOYER = 'employer',
-  EMPLOYEE = 'employee',
+  EMPLOYER = "employer",
+  EMPLOYEE = "employee",
 }
