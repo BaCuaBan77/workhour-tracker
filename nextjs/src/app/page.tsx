@@ -1,17 +1,17 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
-import React from "react";
+'use client'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/AuthContext'
+import React from 'react'
 
 const Home = () => {
-  const { push } = useRouter();
-  const { user } = useAuth();
+  const { push } = useRouter()
+  const { user } = useAuth()
   React.useEffect(() => {
     if (!user) {
-      push("/login");
+      push('/login')
     }
-  }, [user, push]);
-  return <></>;
-};
+  }, [user, push])
+  return <></>
+}
 
-export default Home;
+export default Home

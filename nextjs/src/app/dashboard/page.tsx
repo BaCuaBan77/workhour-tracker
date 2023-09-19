@@ -1,24 +1,24 @@
-'use client';
-import { useAuth } from '@/context/AuthContext';
-import { SystemUserPrivilege } from '@/types';
-import { useRouter } from 'next/navigation';
-import React from 'react';
-import styles from '@/styles/login.module.css';
+'use client'
+import { useAuth } from '@/context/AuthContext'
+import { SystemUserPrivilege } from '@/types'
+import { useRouter } from 'next/navigation'
+import React from 'react'
+import styles from '@/styles/login.module.css'
 
 const Dashboard = () => {
-  const { push } = useRouter();
-  const { user, logout } = useAuth();
+  const { push } = useRouter()
+  const { user, logout } = useAuth()
   React.useEffect(() => {
     if (!user) {
-      push('/login');
+      push('/login')
     }
-  }, [user, push]);
+  }, [user, push])
 
-  let role = SystemUserPrivilege.EMPLOYEE;
+  let role = SystemUserPrivilege.EMPLOYEE
   if (
     user?.resource_access.workhour.roles.includes(SystemUserPrivilege.EMPLOYER)
   ) {
-    role = SystemUserPrivilege.EMPLOYER;
+    role = SystemUserPrivilege.EMPLOYER
   }
   return (
     <div>
@@ -27,7 +27,7 @@ const Dashboard = () => {
         Sign Out
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard
