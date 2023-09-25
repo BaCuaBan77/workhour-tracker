@@ -7,7 +7,11 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react'
-import { createRequestOptions, parseJwt } from '@/src/util/utils'
+import {
+  createLogoutRequestOptions,
+  createRequestOptions,
+  parseJwt,
+} from '@/src/util/utils'
 import { KeycloakToken, UserDTO } from '@/types'
 
 // Create the authentication context
@@ -52,17 +56,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
     // If no error and we have user data, return it
     if (res.status === 200 && data) {
       const token = data.access_token
-      const user = await parseJwt(token)
+      const parsedToken = await parseJwt(token)
+      if (!parsedToken) {
+        return Promise.resolve(undefined)
+      }
+      const keycloakUser: KeycloakToken = {
+        ...parsedToken,
+        accessToken: token,
+      }
 
-      if (!user) {
+      if (!keycloakUser) {
         return Promise.resolve(undefined)
       }
 
       setUser(user)
       const userDto: UserDTO = {
-        username: user.preferred_username,
-        email: user.email,
-        name: user.given_name + ' ' + user.family_name,
+        username: keycloakUser.preferred_username,
+        email: keycloakUser.email,
+        name: keycloakUser.given_name + ' ' + keycloakUser.family_name,
       }
       fetch('/api/user', {
         method: 'POST',
@@ -71,13 +82,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
         },
         body: JSON.stringify(userDto),
       })
-      return Promise.resolve(user)
+      return Promise.resolve(keycloakUser)
     }
     return Promise.resolve(undefined)
   }
 
-  const logout = () => {
-    // Simulate a logout process
+  const logout = async () => {
+    if (user && user.accessToken) {
+      await fetch(
+        `http://192.168.0.177:8080/realms/master/protocol/openid-connect/logout`,
+        createLogoutRequestOptions(user.accessToken)
+      )
+    }
     setUser(null)
   }
 

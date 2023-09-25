@@ -1,4 +1,4 @@
-import { KeycloakToken } from '@/types'
+import { KeycloakToken, KeycloakUser } from '@/types'
 
 export const createRequestOptions = (
   grantType: string,
@@ -27,7 +27,27 @@ export const createRequestOptions = (
   } as RequestInit
 }
 
-export function parseJwt(token: string): KeycloakToken | undefined {
+/**
+ * Create logout request options
+ *
+ * @param refreshToken string | null
+ * @param accessToken string | null
+ */
+export const createLogoutRequestOptions = (accessToken: string | null) => {
+  const logoutHeaders = new Headers()
+  logoutHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
+  logoutHeaders.append('Authorization', 'Bearer ' + accessToken)
+  const logoutBody = new URLSearchParams()
+  logoutBody.append('client_id', 'workhour')
+  return {
+    method: 'POST',
+    headers: logoutHeaders,
+    body: logoutBody as any,
+    mode: 'no-cors',
+  } as RequestInit
+}
+
+export function parseJwt(token: string): KeycloakUser | undefined {
   var base64Url = token.split('.')[1]
   if (!base64Url || !base64Url[1]) {
     console.error('ParseJwt failed, token invalid')

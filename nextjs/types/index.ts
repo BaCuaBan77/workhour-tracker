@@ -1,4 +1,7 @@
-export interface KeycloakToken {
+export interface KeycloakToken extends KeycloakUser {
+  accessToken: string
+}
+export interface KeycloakUser {
   exp: number
   iat: number
   jti: string
