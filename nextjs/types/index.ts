@@ -40,3 +40,16 @@ export enum SystemUserPrivilege {
   EMPLOYER = 'employer',
   EMPLOYEE = 'employee',
 }
+
+export interface WorkHourDTO {
+  startTime: string
+  endTime: string
+  date: string
+  userId: number
+}
+
+export interface UserDTO {
+  username: string
+  email: string
+  name: string
+}

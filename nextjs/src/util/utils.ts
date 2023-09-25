@@ -45,3 +45,37 @@ export function parseJwt(token: string): KeycloakToken | undefined {
 
   return JSON.parse(jsonPayload)
 }
+
+export function calculateDurationInHours(
+  startTime: string,
+  endTime: string
+): number {
+  const startParts = startTime.split(':')
+  const endParts = endTime.split(':')
+
+  if (startParts.length !== 2 || endParts.length !== 2) {
+    throw new Error('Invalid time format. Use HH:mm')
+  }
+
+  const startHour = parseInt(startParts[0], 10)
+  const startMinute = parseInt(startParts[1], 10)
+  const endHour = parseInt(endParts[0], 10)
+  const endMinute = parseInt(endParts[1], 10)
+
+  if (
+    isNaN(startHour) ||
+    isNaN(startMinute) ||
+    isNaN(endHour) ||
+    isNaN(endMinute)
+  ) {
+    throw new Error('Invalid time format. Use HH:mm')
+  }
+
+  const startMinutes = startHour * 60 + startMinute
+  const endMinutes = endHour * 60 + endMinute
+
+  const durationInMinutes = endMinutes - startMinutes
+  const durationInHours = durationInMinutes / 60
+
+  return durationInHours
+}
