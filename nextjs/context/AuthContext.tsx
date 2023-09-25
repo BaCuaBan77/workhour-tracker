@@ -8,12 +8,15 @@ import React, {
   ReactNode,
 } from 'react'
 import { createRequestOptions, parseJwt } from '@/src/util/utils'
-import { KeycloakToken } from '@/types'
+import { KeycloakToken, UserDTO } from '@/types'
 
 // Create the authentication context
 interface AuthContextType {
   user: KeycloakToken | null
-  login: (username: string, password: string) => Promise<string | undefined>
+  login: (
+    username: string,
+    password: string
+  ) => Promise<KeycloakToken | undefined>
   logout: () => void
 }
 
@@ -40,7 +43,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (
     username: string,
     password: string
-  ): Promise<string | undefined> => {
+  ): Promise<KeycloakToken | undefined> => {
     const res = await fetch(
       'http://192.168.0.177:8080/realms/master/protocol/openid-connect/token',
       createRequestOptions('password', username, password, null)
@@ -56,7 +59,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       setUser(user)
-      return Promise.resolve(user.preferred_username)
+      const userDto: UserDTO = {
+        username: user.preferred_username,
+        email: user.email,
+        name: user.given_name + ' ' + user.family_name,
+      }
+      fetch('/api/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userDto),
+      })
+      return Promise.resolve(user)
     }
     return Promise.resolve(undefined)
   }
