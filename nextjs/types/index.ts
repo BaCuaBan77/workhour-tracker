@@ -1,4 +1,7 @@
-export interface KeycloakToken {
+export interface KeycloakToken extends KeycloakUser {
+  accessToken: string
+}
+export interface KeycloakUser {
   exp: number
   iat: number
   jti: string
@@ -39,4 +42,17 @@ export interface Roles {
 export enum SystemUserPrivilege {
   EMPLOYER = 'employer',
   EMPLOYEE = 'employee',
+}
+
+export interface WorkHourDTO {
+  startTime: string
+  endTime: string
+  date: string
+  userId: number
+}
+
+export interface UserDTO {
+  username: string
+  email: string
+  name: string
 }

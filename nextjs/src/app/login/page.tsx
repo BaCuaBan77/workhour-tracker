@@ -5,6 +5,7 @@ import styles from '@/styles/login.module.css'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
+import { UserDTO } from '@/types'
 
 const Login = () => {
   const { push } = useRouter()
@@ -26,9 +27,9 @@ const Login = () => {
     e.preventDefault()
     try {
       setLoading(true)
-      const user = await login(formValues.username, formValues.password)
+      const loggedInUser = await login(formValues.username, formValues.password)
 
-      if (user) {
+      if (loggedInUser) {
         setLoading(false)
         setFormValues({ username: '', password: '' })
       } else {

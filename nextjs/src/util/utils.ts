@@ -1,4 +1,4 @@
-import { KeycloakToken } from '@/types'
+import { KeycloakToken, KeycloakUser } from '@/types'
 
 export const createRequestOptions = (
   grantType: string,
@@ -27,7 +27,27 @@ export const createRequestOptions = (
   } as RequestInit
 }
 
-export function parseJwt(token: string): KeycloakToken | undefined {
+/**
+ * Create logout request options
+ *
+ * @param refreshToken string | null
+ * @param accessToken string | null
+ */
+export const createLogoutRequestOptions = (accessToken: string | null) => {
+  const logoutHeaders = new Headers()
+  logoutHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
+  logoutHeaders.append('Authorization', 'Bearer ' + accessToken)
+  const logoutBody = new URLSearchParams()
+  logoutBody.append('client_id', 'workhour')
+  return {
+    method: 'POST',
+    headers: logoutHeaders,
+    body: logoutBody as any,
+    mode: 'no-cors',
+  } as RequestInit
+}
+
+export function parseJwt(token: string): KeycloakUser | undefined {
   var base64Url = token.split('.')[1]
   if (!base64Url || !base64Url[1]) {
     console.error('ParseJwt failed, token invalid')
@@ -44,4 +64,38 @@ export function parseJwt(token: string): KeycloakToken | undefined {
   )
 
   return JSON.parse(jsonPayload)
+}
+
+export function calculateDurationInHours(
+  startTime: string,
+  endTime: string
+): number {
+  const startParts = startTime.split(':')
+  const endParts = endTime.split(':')
+
+  if (startParts.length !== 2 || endParts.length !== 2) {
+    throw new Error('Invalid time format. Use HH:mm')
+  }
+
+  const startHour = parseInt(startParts[0], 10)
+  const startMinute = parseInt(startParts[1], 10)
+  const endHour = parseInt(endParts[0], 10)
+  const endMinute = parseInt(endParts[1], 10)
+
+  if (
+    isNaN(startHour) ||
+    isNaN(startMinute) ||
+    isNaN(endHour) ||
+    isNaN(endMinute)
+  ) {
+    throw new Error('Invalid time format. Use HH:mm')
+  }
+
+  const startMinutes = startHour * 60 + startMinute
+  const endMinutes = endHour * 60 + endMinute
+
+  const durationInMinutes = endMinutes - startMinutes
+  const durationInHours = durationInMinutes / 60
+
+  return durationInHours
 }
