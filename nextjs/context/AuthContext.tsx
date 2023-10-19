@@ -49,7 +49,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     password: string
   ): Promise<KeycloakToken | undefined> => {
     const res = await fetch(
-      'http://192.168.0.177:8080/realms/master/protocol/openid-connect/token',
+      'http://192.168.3.10:8080/realms/master/protocol/openid-connect/token',
       createRequestOptions('password', username, password, null)
     )
     const data = await res.json()
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return Promise.resolve(undefined)
       }
 
-      setUser(user)
+      setUser(keycloakUser)
       const userDto: UserDTO = {
         username: keycloakUser.preferred_username,
         email: keycloakUser.email,
@@ -90,7 +90,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = async () => {
     if (user && user.accessToken) {
       await fetch(
-        `http://192.168.0.177:8080/realms/master/protocol/openid-connect/logout`,
+        `http://192.168.3.10:8080/realms/master/protocol/openid-connect/logout`,
         createLogoutRequestOptions(user.accessToken)
       )
     }

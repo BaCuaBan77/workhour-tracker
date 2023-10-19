@@ -32,6 +32,7 @@ const Login = () => {
       if (loggedInUser) {
         setLoading(false)
         setFormValues({ username: '', password: '' })
+        push('/dashboard')
       } else {
         setError('invalid email or password')
       }

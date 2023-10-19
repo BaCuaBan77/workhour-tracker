@@ -9,25 +9,8 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
-  duckdns:
-    image: lscr.io/linuxserver/duckdns:latest
-    container_name: duckdns
-    environment:
-      - SUBDOMAINS=workload
-      - TOKEN=$DUCKDNS_TOKEN
-  nginx:
-    image: 'jc21/nginx-proxy-manager:latest'
-    container_name: nginx
-    restart: unless-stopped
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - db:/var/lib/postgresql/data
   app:
     image: bacuaban77/app:latest
     container_name: app
@@ -39,20 +22,19 @@ services:
     ports:
       - '3000:3000'
   keycloak:
-      image: bitnami/keycloak:latest
-      container_name: keycloak
-      environment:
-        - KEYCLOAK_DATABASE_HOST=db
-        - KEYCLOAK_DATABASE_NAME=keycloak
-        - KEYCLOAK_DATABASE_USER=postgres
-        - KEYCLOAK_DATABASE_PASSWORD=postgres
-      ports:
-        - "8443:8443"
-        - "8080:8080"
-        - "9990:9990"
-      volumes:
-        - /path/to/init-scripts:/docker-entrypoint-initdb.d
-
+    image: bitnami/keycloak:latest
+    container_name: keycloak
+    environment:
+      - KEYCLOAK_DATABASE_HOST=db
+      - KEYCLOAK_DATABASE_NAME=keycloak
+      - KEYCLOAK_DATABASE_USER=postgres
+      - KEYCLOAK_DATABASE_PASSWORD=postgres
+    ports:
+      - '8443:8443'
+      - '8080:8080'
+      - '9990:9990'
+    volumes:
+      - /path/to/init-scripts:/docker-entrypoint-initdb.d
 
 volumes:
   db:
