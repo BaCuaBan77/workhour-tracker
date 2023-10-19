@@ -4,6 +4,7 @@ import { SystemUserPrivilege } from '@/types'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import styles from '@/styles/login.module.css'
+import EmployerView from '@/components/EmployerView'
 
 const Dashboard = () => {
   const { push } = useRouter()
@@ -26,6 +27,7 @@ const Dashboard = () => {
       <button className={styles.button} type='submit' onClick={logout}>
         Sign Out
       </button>
+      <EmployerView />
     </div>
   )
 }
