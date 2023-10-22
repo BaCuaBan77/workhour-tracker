@@ -69,7 +69,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return Promise.resolve(undefined)
       }
 
-      setUser(user)
+      setUser(keycloakUser)
+
       const userDto: UserDTO = {
         username: keycloakUser.preferred_username,
         email: keycloakUser.email,
