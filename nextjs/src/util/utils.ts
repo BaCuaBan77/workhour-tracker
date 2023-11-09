@@ -65,6 +65,14 @@ export function parseJwt(token: string): KeycloakUser | undefined {
 
   return JSON.parse(jsonPayload)
 }
+export function areDatesEqual(date1: Date, date2: Date): boolean {
+  // Compare year, month, and day of the two Date objects
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  )
+}
 
 export function calculateDurationInHours(
   startTime: string,

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import styles from '@/styles/login.module.css'
 import EmployerView from '@/components/EmployerView'
+import EmployeeView from '@/components/EmployeeView'
 
 const Dashboard = () => {
   const { push } = useRouter()
@@ -23,11 +24,24 @@ const Dashboard = () => {
   }
   return (
     <div>
-      <h1>Main page for {role}</h1>
-      <button className={styles.button} type='submit' onClick={logout}>
-        Sign Out
-      </button>
-      <EmployerView />
+      <header className={styles.header}>
+        <h1 className={styles.viewTitle}>
+          {role === SystemUserPrivilege.EMPLOYER
+            ? 'Employer View'
+            : 'Employee View'}
+        </h1>
+        <div className={styles.loggedOutDiv}>
+          <p className={styles.username}>{user?.name}</p>
+          <button className={styles.signOutButton} onClick={logout}>
+            Sign Out
+          </button>
+        </div>
+      </header>
+      {role === SystemUserPrivilege.EMPLOYER ? (
+        <EmployerView />
+      ) : (
+        <EmployeeView />
+      )}
     </div>
   )
 }
