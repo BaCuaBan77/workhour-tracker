@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
     })
     return NextResponse.json(user)
   }
+
 }
 
 export async function POST(req: Request) {

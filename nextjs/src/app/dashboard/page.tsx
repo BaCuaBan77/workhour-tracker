@@ -7,6 +7,7 @@ import styles from '@/styles/login.module.css'
 import EmployerView from '@/components/EmployerView'
 import EmployeeView from '@/components/EmployeeView'
 
+
 const Dashboard = () => {
   const { push } = useRouter()
   const { user, logout } = useAuth()
@@ -42,6 +43,7 @@ const Dashboard = () => {
       ) : (
         <EmployeeView />
       )}
+
     </div>
   )
 }

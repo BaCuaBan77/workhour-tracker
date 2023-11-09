@@ -74,6 +74,7 @@ export function areDatesEqual(date1: Date, date2: Date): boolean {
   )
 }
 
+
 export function calculateDurationInHours(
   startTime: string,
   endTime: string

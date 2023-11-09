@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import Select from 'react-select'
@@ -24,6 +25,7 @@ function EmployerView() {
       areDatesEqual(date, h.startTime)
     )
     return workhour?.duration || 0
+
   }
 
   const customDayTileContent = ({
@@ -36,6 +38,7 @@ function EmployerView() {
     const hours = getWorkHoursForDate(date)
     return <div>{view === 'month' && <p>Work Hours: {hours}</p>}</div>
   }
+
 
   const filteredUsers = users.map((user) => ({
     value: user.id,
@@ -60,6 +63,7 @@ function EmployerView() {
       />
       <Calendar
         className={styles.calendar}
+
         onChange={(value, event) => {
           setDate(new Date(value?.toString()!))
         }}

@@ -63,6 +63,7 @@ export interface FullUserDTO {
 export interface WorkHourDTO {
   startTime: Date
   endTime: Date
+
   date: string
   userId: number
 }

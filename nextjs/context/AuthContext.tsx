@@ -12,7 +12,9 @@ import {
   createRequestOptions,
   parseJwt,
 } from '@/src/util/utils'
+
 import { API, KeycloakToken, UserDTO } from '@/types'
+
 
 // Create the authentication context
 interface AuthContextType {
@@ -70,6 +72,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       setUser(keycloakUser)
+
       const userDto: UserDTO = {
         username: keycloakUser.preferred_username,
         email: keycloakUser.email,
@@ -91,6 +94,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (user && user.accessToken) {
       await fetch(
         `http://${API}:8080/realms/master/protocol/openid-connect/logout`,
+
         createLogoutRequestOptions(user.accessToken)
       )
     }
