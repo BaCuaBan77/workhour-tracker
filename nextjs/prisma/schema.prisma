@@ -15,14 +15,18 @@ model User {
   username String   @unique
   email    String   @unique
   name     String?
+  isWorking Boolean @default(false)
+  startAt DateTime?
+
   workHours WorkHour[]
 }
 
 // Define the data model for work hours
 model WorkHour {
   id         String      @unique
-  startTime  String
-  endTime    String
+  startTime  DateTime
+  endTime    DateTime
+
   duration   Int
   user       User     @relation(fields: [userId], references: [id])
   userId     Int

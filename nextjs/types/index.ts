@@ -44,9 +44,26 @@ export enum SystemUserPrivilege {
   EMPLOYEE = 'employee',
 }
 
+export const API = '192.168.64.7'
+
+export interface FullUserDTO {
+  workHours: {
+    id: string
+    startTime: Date
+    endTime: Date
+    duration: number
+    userId: number
+  }[]
+  id: number
+  username: string
+  email: string
+  name: string
+}
+
 export interface WorkHourDTO {
-  startTime: string
-  endTime: string
+  startTime: Date
+  endTime: Date
+
   date: string
   userId: number
 }

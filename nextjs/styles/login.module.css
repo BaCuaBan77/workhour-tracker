@@ -134,3 +134,37 @@
   height: auto;
   margin-bottom: 20px; /* Add margin to separate the image and the login box */
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #007acc; /* Change the background color to your preference */
+  padding: 10px;
+}
+
+.viewTitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff; /* Title text color */
+}
+
+.username {
+  font-size: 17px;
+  margin-right: 20px;
+  color: #fff; /* Title text color */
+}
+
+.loggedOutDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.signOutButton {
+  background-color: #fff; /* Button background color */
+  color: #007acc; /* Button text color */
+  border: none;
+  cursor: pointer;
+  height: 30px;
+}

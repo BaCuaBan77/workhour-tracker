@@ -1,0 +1,40 @@
+/* employerview.module.css */
+.employerView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.viewTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.userSelect {
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.selectedUser {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.calendar {
+  width: 100% !important;
+  max-width: 100%; /* Set the maximum width to 100% to make it full-width */
+  margin: 0 auto; /* Center the calendar horizontally */
+  background-color: #f0f0f0; /* Set a background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  border: 1px solid #ddd; /* Add a border */
+  border-radius: 5px; /* Add rounded corners */
+}
+
+/* Style for the react-calendar tile */
+.react-calendar__tile--active {
+  background-color: #007acc; /* Set the background color for the active day */
+  color: #fff; /* Set the text color for the active day */
+}
+/* Add more styles for the Calendar and other components as needed */
