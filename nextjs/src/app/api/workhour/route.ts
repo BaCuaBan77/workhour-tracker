@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import prisma from '../../../lib/prisma'
 import { WorkHour } from '@prisma/client'
 import { WorkHourDTO } from '@/types'
-import { calculateDurationInHours } from '@/src/util/utils'
+import { calculateDuration } from '@/src/util/utils'
 
 export async function GET(req: Request) {
   const workHours = await prisma.workHour.findMany({
@@ -16,12 +16,16 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const dto: WorkHourDTO = await req.json()
   const workhourID = dto.date + dto.userId
-
+  const startTime = new Date(dto.startTime)
+  const endTime = new Date(dto.endTime)
+  if (!(startTime instanceof Date) || !(endTime instanceof Date)) {
+    return
+  }
   const newWorkHour: WorkHour = {
     id: workhourID,
-    startTime: dto.startTime,
-    endTime: dto.endTime,
-    duration: calculateDurationInHours(dto.startTime, dto.endTime),
+    startTime: startTime,
+    endTime: endTime,
+    duration: calculateDuration(startTime, endTime),
     userId: dto.userId,
   }
 

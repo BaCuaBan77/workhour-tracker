@@ -1,0 +1,19 @@
+/* employeeview.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+.name {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.startedAt {
+  font-size: 20px;
+  margin-bottom: 30px;
+}

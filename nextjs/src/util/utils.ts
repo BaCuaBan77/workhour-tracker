@@ -65,7 +65,9 @@ export function parseJwt(token: string): KeycloakUser | undefined {
 
   return JSON.parse(jsonPayload)
 }
-export function areDatesEqual(date1: Date, date2: Date): boolean {
+export function areDatesEqual(a: Date, b: Date): boolean {
+  const date1 = new Date(a)
+  const date2 = new Date(b)
   // Compare year, month, and day of the two Date objects
   return (
     date1.getFullYear() === date2.getFullYear() &&
@@ -74,37 +76,7 @@ export function areDatesEqual(date1: Date, date2: Date): boolean {
   )
 }
 
-
-export function calculateDurationInHours(
-  startTime: string,
-  endTime: string
-): number {
-  const startParts = startTime.split(':')
-  const endParts = endTime.split(':')
-
-  if (startParts.length !== 2 || endParts.length !== 2) {
-    throw new Error('Invalid time format. Use HH:mm')
-  }
-
-  const startHour = parseInt(startParts[0], 10)
-  const startMinute = parseInt(startParts[1], 10)
-  const endHour = parseInt(endParts[0], 10)
-  const endMinute = parseInt(endParts[1], 10)
-
-  if (
-    isNaN(startHour) ||
-    isNaN(startMinute) ||
-    isNaN(endHour) ||
-    isNaN(endMinute)
-  ) {
-    throw new Error('Invalid time format. Use HH:mm')
-  }
-
-  const startMinutes = startHour * 60 + startMinute
-  const endMinutes = endHour * 60 + endMinute
-
-  const durationInMinutes = endMinutes - startMinutes
-  const durationInHours = durationInMinutes / 60
-
-  return durationInHours
+export function calculateDuration(startDate: Date, endDate: Date): number {
+  const durationInMilliseconds = endDate.getTime() - startDate.getTime()
+  return durationInMilliseconds
 }

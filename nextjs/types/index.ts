@@ -47,7 +47,7 @@ export enum SystemUserPrivilege {
 export const API = '192.168.64.7'
 
 export interface FullUserDTO {
-  workHours: {
+  workHours?: {
     id: string
     startTime: Date
     endTime: Date
@@ -58,12 +58,13 @@ export interface FullUserDTO {
   username: string
   email: string
   name: string
+  isWorking: boolean
+  startAt: Date | null
 }
 
 export interface WorkHourDTO {
   startTime: Date
   endTime: Date
-
   date: string
   userId: number
 }

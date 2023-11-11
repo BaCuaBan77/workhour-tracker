@@ -1,9 +1,14 @@
 import React from 'react'
 import styles from '@/styles/circularbutton.module.css' // Import the CSS module
-
-function CircularButton() {
+interface CircularButtonProps {
+  onClick: () => void
+  text: string
+}
+const CircularButton: React.FC<CircularButtonProps> = ({ onClick, text }) => {
   return (
-    <button className={styles.circularButton}>Start Working</button> // Use the imported CSS class
+    <button className={styles.circularButton} onClick={onClick}>
+      {text}
+    </button>
   )
 }
 
