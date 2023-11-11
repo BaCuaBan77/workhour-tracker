@@ -14,7 +14,7 @@ import {
 } from '@/src/util/utils'
 
 import { API, KeycloakToken, UserDTO } from '@/types'
-
+import { useRouter } from 'next/navigation'
 
 // Create the authentication context
 interface AuthContextType {
@@ -44,6 +44,7 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<KeycloakToken | null>(null)
+  const { push } = useRouter()
 
   // Simulated login and logout functions
   const login = async (
@@ -58,6 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     // If no error and we have user data, return it
     if (res.status === 200 && data) {
       const token = data.access_token
+      localStorage.setItem('userToken', token)
       const parsedToken = await parseJwt(token)
       if (!parsedToken) {
         return Promise.resolve(undefined)
@@ -98,19 +100,38 @@ export function AuthProvider({ children }: AuthProviderProps) {
       )
     }
     setUser(null)
+    localStorage.removeItem('userToken')
   }
 
   // Check if the user is authenticated when the component mounts
   useEffect(() => {
-    // Simulated check (you can replace this with actual authentication logic)
-    const isAuthenticated = user !== null
+    const token = localStorage.getItem('userToken')
+    let isAuthenticated = false
+    if (user !== null) {
+      isAuthenticated = true
+    } else if (token) {
+      const parsedToken = parseJwt(token)
+      if (!parsedToken) {
+        return
+      }
+      const keycloakUser: KeycloakToken = {
+        ...parsedToken,
+        accessToken: token,
+      }
+
+      if (!keycloakUser) {
+        return
+      }
+
+      setUser(keycloakUser)
+    }
 
     if (isAuthenticated) {
-      // User is authenticated, do something
+      push('/dashboard')
     } else {
-      // User is not authenticated, do something else
+      push('/login')
     }
-  }, [user])
+  }, [user, push])
 
   const authContextValue: AuthContextType = {
     user,

@@ -15,13 +15,7 @@ const Login = () => {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { user, login, logout } = useAuth()
-
-  React.useEffect(() => {
-    if (user) {
-      push('/dashboard')
-    }
-  }, [user, push])
+  const { login } = useAuth()
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

@@ -7,15 +7,8 @@ import styles from '@/styles/login.module.css'
 import EmployerView from '@/components/EmployerView'
 import EmployeeView from '@/components/EmployeeView'
 
-
 const Dashboard = () => {
-  const { push } = useRouter()
   const { user, logout } = useAuth()
-  React.useEffect(() => {
-    if (!user) {
-      push('/login')
-    }
-  }, [user, push])
 
   let role = SystemUserPrivilege.EMPLOYEE
   if (
@@ -43,7 +36,6 @@ const Dashboard = () => {
       ) : (
         <EmployeeView />
       )}
-
     </div>
   )
 }
