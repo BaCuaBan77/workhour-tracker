@@ -3,7 +3,12 @@ const nextConfig = {}
 
 module.exports = nextConfig
 const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
-
+module.exports = {
+  reactStrictMode: true,
+  env: {
+    SERVER_IP: process.env.SERVER_IP,
+  },
+}
 module.exports = {
   webpack: (config, { isServer }) => {
     if (isServer) {

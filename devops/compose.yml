@@ -14,6 +14,8 @@ services:
   app:
     image: bacuaban77/app:latest
     container_name: app
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@${SERVER_IP}:5432/fullstack
     depends_on:
       - db
     restart: unless-stopped

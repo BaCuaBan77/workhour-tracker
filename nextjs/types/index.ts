@@ -44,7 +44,7 @@ export enum SystemUserPrivilege {
   EMPLOYEE = 'employee',
 }
 
-export const API = '192.168.64.7'
+export const API: string | undefined = process.env.SERVER_IP
 
 export interface FullUserDTO {
   workHours?: {
