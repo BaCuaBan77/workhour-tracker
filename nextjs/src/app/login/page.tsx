@@ -5,7 +5,6 @@ import styles from '@/styles/login.module.css'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
-import loginPageImage from '@/public/static/snowflake.jpg'
 
 const Login = () => {
   const { push } = useRouter()
@@ -43,7 +42,7 @@ const Login = () => {
     <div className={styles.body}>
       {error && <p>{error}</p>}
       <Image
-        src={loginPageImage}
+        src={'/static/snowflake.jpg'}
         alt='Login Image'
         className={styles.image}
         width={1000} // Adjust the width as needed
