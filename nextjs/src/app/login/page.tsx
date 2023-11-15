@@ -47,6 +47,7 @@ const Login = () => {
         className={styles.image}
         width={1000} // Adjust the width as needed
         height={800} // Adjust the height as needed
+        unoptimized
       />
       <div className={styles.subBody}>
         <div className={styles.sloganContainer}>
