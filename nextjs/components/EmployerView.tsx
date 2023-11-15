@@ -28,10 +28,10 @@ function EmployerView() {
     if (!workhours || workhours.length === 0) {
       return 0
     }
-    let duration = 0
-    workhours.forEach((workhour) => {
-      duration += workhour?.duration || 0
-    })
+    const duration = workhours.reduce(
+      (sum, workhour) => sum + (workhour?.duration || 0),
+      0
+    )
 
     return (duration / (1000 * 60 * 60)).toFixed(2)
   }

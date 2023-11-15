@@ -1,12 +1,14 @@
-'use client'
-
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import styles from '@/styles/login.module.css'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
 import loginPageImage from '@/public/snowflake.jpg'
+import { Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'Login',
+}
 const Login = () => {
   const { push } = useRouter()
   const [formValues, setFormValues] = useState({

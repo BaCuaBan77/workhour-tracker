@@ -21,6 +21,7 @@ function EmployeeView() {
   }, [user])
 
   if (!dbUser) {
+    console.error('No users was found in the database')
     return
   }
   const currentDate = new Date()
@@ -57,7 +58,6 @@ function EmployeeView() {
       body: JSON.stringify(newDbUser),
     })
   }
-  console.log(dbUser.startAt)
   return (
     <div className={styles.container}>
       <p className={styles.name}>{dbUser?.name}</p>
