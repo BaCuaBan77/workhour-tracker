@@ -6,7 +6,7 @@ const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
 module.exports = {
   reactStrictMode: true,
   env: {
-    SERVER_IP: process.env.SERVER_IP,
+    NEXT_PUBLIC_SERVER_IP: process.env.NEXT_PUBLIC_SERVER_IP,
   },
 }
 module.exports = {

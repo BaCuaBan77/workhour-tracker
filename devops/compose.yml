@@ -16,6 +16,7 @@ services:
     container_name: app
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@${SERVER_IP}:5432/fullstack
+      - NEXT_PUBLIC_SERVER_IP=${NEXT_PUBLIC_SERVER_IP}
     depends_on:
       - db
     restart: unless-stopped
@@ -25,6 +26,8 @@ services:
     image: bitnami/keycloak:latest
     container_name: keycloak
     restart: unless-stopped
+    depends_on:
+      - db
     environment:
       - KEYCLOAK_DATABASE_HOST=db
       - KEYCLOAK_DATABASE_NAME=keycloak
