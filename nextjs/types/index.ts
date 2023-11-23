@@ -44,8 +44,8 @@ export enum SystemUserPrivilege {
   EMPLOYEE = 'employee',
 }
 
-export const API: string | undefined = global.process.env.NEXT_PUBLIC_SERVER_IP
-  ? global.process.env.NEXT_PUBLIC_SERVER_IP
+export const API: string | undefined = process.env.NEXT_PUBLIC_SERVER_IP
+  ? process.env.NEXT_PUBLIC_SERVER_IP
   : 'localhost'
 
 export interface FullUserDTO {
