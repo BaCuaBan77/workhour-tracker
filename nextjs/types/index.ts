@@ -46,7 +46,7 @@ export enum SystemUserPrivilege {
 
 export const API: string | undefined = process.env.NEXT_PUBLIC_SERVER_IP
   ? process.env.NEXT_PUBLIC_SERVER_IP
-  : 'keycloak'
+  : '192.168.0.187'
 
 export interface FullUserDTO {
   workHours?: {
