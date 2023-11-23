@@ -15,7 +15,7 @@ services:
     image: bacuaban77/app:latest
     container_name: app
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@${SERVER_IP}:5432/fullstack
+      - DATABASE_URL=postgresql://postgres:postgres@${NEXT_PUBLIC_SERVER_IP}:5432/fullstack
       - NEXT_PUBLIC_SERVER_IP=${NEXT_PUBLIC_SERVER_IP}
     depends_on:
       - db

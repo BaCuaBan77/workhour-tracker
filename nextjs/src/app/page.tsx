@@ -1,16 +1,27 @@
-'use client'
-import { useRouter } from 'next/navigation'
-import { useAuth } from '@/context/AuthContext'
 import React from 'react'
+import prisma from '@/src/lib/prisma'
 
 const Home = () => {
-  const { push } = useRouter()
-  const { user } = useAuth()
-  React.useEffect(() => {
-    if (!user) {
-      push('/login')
-    }
-  }, [user, push])
+  prisma.$queryRaw`CREATE DATABASE keycloak`
+    .then((keycloak) => {
+      console.debug('Execute keycloak: ' + keycloak)
+    })
+    .catch((e) => {
+      console.error(
+        'Failed when creating keycloak database, maybe the database exists: ' +
+          e
+      )
+    })
+  prisma.$queryRaw`CREATE DATABASE fullstack`
+    .then((fullstack) => {
+      console.debug('Execute fullstack: ' + fullstack)
+    })
+    .catch((e) => {
+      console.error(
+        'Failed when creating fullstack database, maybe the database exists: ' +
+          e
+      )
+    })
   return <></>
 }
 
