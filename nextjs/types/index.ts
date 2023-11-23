@@ -46,8 +46,6 @@ export enum SystemUserPrivilege {
   EMPLOYEE = 'employee',
 }
 
-export const API: string | null = localStorage.getItem('API')
-
 export interface FullUserDTO {
   workHours?: {
     id: string

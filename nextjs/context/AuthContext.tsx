@@ -44,14 +44,15 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<KeycloakToken | null>(null)
   const { push } = useRouter()
-  const API = localStorage.getItem('API')
   // Simulated login and logout functions
   const login = async (
     username: string,
     password: string
   ): Promise<KeycloakToken | undefined> => {
+    const configRes = await fetch('/api/config')
+    const configData = await configRes.json()
     const res = await fetch(
-      `http://${API}:8080/realms/master/protocol/openid-connect/token`,
+      `http://${configData.API}:8080/realms/master/protocol/openid-connect/token`,
       createRequestOptions('password', username, password, null)
     )
     const data = await res.json()
@@ -91,9 +92,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   const logout = async () => {
+    const configRes = await fetch('/api/config')
+    const configData = await configRes.json()
     if (user && user.accessToken) {
       await fetch(
-        `http://${API}:8080/realms/master/protocol/openid-connect/logout`,
+        `http://${configData.API}:8080/realms/master/protocol/openid-connect/logout`,
 
         createLogoutRequestOptions(user.accessToken)
       )
