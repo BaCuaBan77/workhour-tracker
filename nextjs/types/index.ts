@@ -1,5 +1,3 @@
-import { env } from 'process'
-
 export interface KeycloakToken extends KeycloakUser {
   accessToken: string
 }
@@ -45,6 +43,10 @@ export enum SystemUserPrivilege {
   EMPLOYER = 'employer',
   EMPLOYEE = 'employee',
 }
+
+export const API: string | undefined = global.process.env.NEXT_PUBLIC_SERVER_IP
+  ? global.process.env.NEXT_PUBLIC_SERVER_IP
+  : 'localhost'
 
 export interface FullUserDTO {
   workHours?: {
