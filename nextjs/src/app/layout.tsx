@@ -8,6 +8,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  fetch('api/config', { method: `GET` }).then(async (response) => {
+    if (response.ok) {
+      const data = await response.json()
+      localStorage.setItem('API', data.API)
+    }
+  })
   return (
     <html lang='en'>
       <head>
