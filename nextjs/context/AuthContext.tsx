@@ -12,7 +12,6 @@ import {
   createRequestOptions,
   parseJwt,
 } from '@/src/util/utils'
-
 import { API, KeycloakToken, UserDTO } from '@/types'
 import { useRouter } from 'next/navigation'
 
@@ -45,7 +44,6 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<KeycloakToken | null>(null)
   const { push } = useRouter()
-
   // Simulated login and logout functions
   const login = async (
     username: string,

@@ -15,7 +15,8 @@ services:
     image: bacuaban77/app:latest
     container_name: app
     environment:
-      - DATABASE_URL="postgresql://postgres:postgres@localhost:5432/fullstack?sslmode=disable"
+      - DATABASE_URL=postgresql://postgres:postgres@${NEXT_PUBLIC_SERVER_IP}:5432/fullstack
+      - NEXT_PUBLIC_SERVER_IP=${NEXT_PUBLIC_SERVER_IP}
     depends_on:
       - db
     restart: unless-stopped
@@ -24,11 +25,16 @@ services:
   keycloak:
     image: bitnami/keycloak:latest
     container_name: keycloak
+    restart: unless-stopped
+    depends_on:
+      - db
     environment:
       - KEYCLOAK_DATABASE_HOST=db
-      - KEYCLOAK_DATABASE_NAME=keycloak
+      - KEYCLOAK_DATABASE_NAME=postgres
       - KEYCLOAK_DATABASE_USER=postgres
       - KEYCLOAK_DATABASE_PASSWORD=postgres
+      - KEYCLOAK_ADMIN_USER=${ADMIN_USER}
+      - KEYCLOAK_ADMIN_PASSWORD=${ADMIN_PASSWORD}
     ports:
       - '8443:8443'
       - '8080:8080'
