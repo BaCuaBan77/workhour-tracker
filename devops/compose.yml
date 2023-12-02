@@ -30,7 +30,7 @@ services:
       - db
     environment:
       - KEYCLOAK_DATABASE_HOST=db
-      - KEYCLOAK_DATABASE_NAME=keycloak
+      - KEYCLOAK_DATABASE_NAME=postgres
       - KEYCLOAK_DATABASE_USER=postgres
       - KEYCLOAK_DATABASE_PASSWORD=postgres
       - KEYCLOAK_ADMIN_USER=${ADMIN_USER}
